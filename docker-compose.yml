@@ -1,0 +1,24 @@
+version: "3"
+
+services:
+  db:
+    image: mysql:5.7
+    container_name: irohaboard_db
+    environment:
+      MYSQL_RANDOM_ROOT_PASSWORD: 1
+      MYSQL_DATABASE: irohaboard
+      MYSQL_USER: irohaboard
+      MYSQL_PASSWORD: irohaboard
+      TZ: "Asia/Tokyo"
+    command: mysqld --character-set-server=utf8mb4 --collation-server=utf8mb4_unicode_ci
+    volumes:
+      - ./db/data:/var/lib/mysql
+      - ./db/my.cnf:/etc/mysql/conf.d/my.cnf
+    ports:
+      - 3306:3306
+
+  web:
+    build: .
+    container_name: irohaboard_web
+    ports:
+      - 80:80
